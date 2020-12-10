@@ -1,1 +1,1 @@
-# consensys-fp  :cherries:
+# consensys-fp
