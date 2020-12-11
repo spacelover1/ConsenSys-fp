@@ -53,7 +53,6 @@ contract MarketPlace is Ownable {
     event storeOwnerAdded(address newStoreOwner);
     event storeOwnerRemoved(address storeOwner);
     event storeFrontCreated(uint storeNum, string storeName, address storeOwner);
-    event storeFrontApproved(uint storeNum, address admin);
     event productAdded(uint storeNum, string productName, uint productNum);
     event productPriceUpdated(uint storeNum, uint productNum);
     event productRemoved(uint storeNum, uint productNum);
@@ -154,7 +153,6 @@ contract MarketPlace is Ownable {
     */   
     function addProduct(uint _storeNum, string memory _productName, uint _productPrice, uint _productQuantity) 
     public returns(uint){
-        // require(storeFronts[_storeNum].state == true,  "Sorry, store front is not approved yet!");
         require(_productPrice > 0, "Sorry, invalid product price!");
         require(_productQuantity > 0, "Sorry, invalid product quantity!");
         storeFronts[_storeNum].skuCount = SafeMath.add(storeFronts[_storeNum].skuCount, 1);
@@ -172,7 +170,6 @@ contract MarketPlace is Ownable {
     */   
     function updateProductPrice(uint _storeNum, uint _productNum, uint _newProductPrice) 
     public returns(bool){
-        // require(storeFronts[_storeNum].state == true,  "Sorry, store front is not approved yet!");
         require(_newProductPrice > 0, "Sorry, invalid product price!");
         StoreProducts[_productNum].price = _newProductPrice;
         emit productPriceUpdated(_storeNum, _productNum);
@@ -185,7 +182,6 @@ contract MarketPlace is Ownable {
     */   
     function removeProduct(uint _storeNum, uint _productNum) 
     public returns(bool){
-        // require(storeFronts[_storeNum].state == true,  "Sorry, store front is not approved yet!");
         StoreProducts[_productNum].isAvailable = false;
         StoreProducts[_productNum].quantity = 0;
         emit productRemoved(_storeNum, _productNum);
