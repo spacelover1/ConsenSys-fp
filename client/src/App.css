@@ -1,22 +1,75 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-}
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 2px;
+  text-align: center;
+  background: url('https://uupload.ir/files/qwbu_header3.png');
+  
+  background-size: cover;
+  color: #ffffff; 
 }
 
-.App-link {
-  color: #09d3ac;
+
+h1 {
+  font-size: 70px;
+  padding: 20px;
 }
+h3 {
+  text-align: center;
+  font-size: 30px;
+  color: darkgreen;
+}
+h4 {
+  text-align: center;
+  font-size: 20px;
+  color: darkred;
+}
+h5 {
+  text-align: center;
+  font-size: 18px;
+  color: darkcyan;
+}
+body {
+  text-align: center;
+  margin: 0px auto;
+}
+ul {
+  padding: 10px;
+}
+li {
+  font-size: 20px;
+  display: inline;
+  padding: 0px 10px 0px 10px;
+}
+div {
+  text-align: center;
+}
+input {
+  border: 2;
+  padding: 10px;
+  font-size: 15px;
+}
+button{
+  font-size: 20px;
+  background: navy;
+  color: white;
+  border: 0;
+  padding: 5px 5px 5px 5px;
+  
+  }
+@media (max-width: 500px) {
+  h1 {
+    font-size: 36px;
+    padding: 5px;
+  }
+  li {
+    font-size: 10px;
+    padding: 5px;
+    display: block;
+  }
+}
+
+.ManageStores { display: block; padding: 10;border: 1px solid gray; margin: 10px; bgcolor: #F0F0F0}
+
+.ManageStoresChild { display: block; padding: 10; margin: 30px; }
+
