@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MarketPlace } from './abi/abi.js'
+import { MarketPlace } from './abi/abi'
 import Web3 from 'web3';
 import Header from './components/Header';
 import Admin from './components/Admin';
@@ -32,19 +32,20 @@ class App extends React.Component {
 
 
 
-    }catch(error){
-      alert("ERror:" + error);
+    }catch(error) {
+      alert("ERROR:" + error);
     }
        
   };
+  
   start = async() =>{
-
+    console.log("---------------1---------------------");
     const{accounts, contract} = this.state;
     const addressType = await contract.methods.addressType().call({from: accounts[0]});
     const _MarketState = await contract.methods.getMarketState().call({from: accounts[0]});
-
+    console.log("------------------2------------------");
     this.setState({addressType: addressType,  MarketState: _MarketState});
-
+    console.log("------------------3------------------");
   };
 
 render() {
