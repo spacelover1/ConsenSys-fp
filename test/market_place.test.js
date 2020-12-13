@@ -25,7 +25,23 @@ contract("MarketPlace", function(accounts) {
     assert.equal(await marketplace.addressType({from:storeOwner}), 1 );
   });
 
-  
+
+    /** @tile Test 3
+      * @notce  admin is the only user who can change Market State 
+    */
+   it("Admin is able to change Market State", async() => {
+    var marketplace = await MarketPlace.deployed();
+
+    let result = await marketplace.changeMarketState(false, {from: admin});
+    
+    assert.equal(result.logs[0].event, "marketStateChanged");
+    assert.equal(await marketplace.getMarketState({from:storeOwner}), false);
+
+    await marketplace.changeMarketState(true, {from: admin});
+    });
+
+
+
 
  });
   

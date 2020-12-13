@@ -43,7 +43,7 @@ class App extends React.Component {
     const addressType = await contract.methods.addressType().call({from: accounts[0]});
     const _MarketState = await contract.methods.getMarketState().call({from: accounts[0]});
 
-    this.setState({addressType: addressType, MarketState: _MarketState});
+    this.setState({addressType: addressType,  MarketState: _MarketState});
 
   };
 

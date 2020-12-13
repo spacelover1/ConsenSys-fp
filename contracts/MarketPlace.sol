@@ -19,6 +19,7 @@ contract MarketPlace is Ownable {
     uint public adminCount;
     uint public storeCount;
     uint public productCount;
+    bool public marktState;
     mapping (address => bool) public admins;
     mapping (address => bool) public storeOwners;
     mapping(uint => StoreFront) public storeFronts;
@@ -50,6 +51,7 @@ contract MarketPlace is Ownable {
 
     event adminAdded(address newAdmin);
     event adminRemoved(address admin);
+    event marketStateChanged(bool state);
     event storeOwnerAdded(address newStoreOwner);
     event storeOwnerRemoved(address storeOwner);
     event storeFrontCreated(uint storeNum, string storeName, address storeOwner);
@@ -70,6 +72,9 @@ contract MarketPlace is Ownable {
     modifier onlyShopper(){require(!storeOwners[msg.sender], "Sorry, store owner is not allowed to buy products!"); 
     require(!admins[msg.sender], "Sorry, admin is not allowed to buy products!"); _;}
 
+    /** @dev verifies market state */
+    modifier isMarketActive() {require(marktState, "Sorry, Market state is inactive!"); _;}
+
 
 
     /** @dev constracter initalises state variables */
@@ -79,8 +84,14 @@ contract MarketPlace is Ownable {
         adminCount = 1;
         storeCount = 0;
         productCount = 0;
+        marktState = true;
     }
 
+    /**-----------------------------------------------------------------------
+        ------------------------ Admin Functions ----------------------
+       -----------------------------------------------------------------------*/
+  
+    
     
     /** @dev admin allowed to add a new store owner 
       * @param _newStoreOwner new store owner addrress 
@@ -90,6 +101,21 @@ contract MarketPlace is Ownable {
         storeOwners[_newStoreOwner] = true;
         storeOwnersCount = SafeMath.add(storeOwnersCount, 1);
         emit storeOwnerAdded(_newStoreOwner);
+    }
+
+
+    /** @dev market owner allowed to chainge marketplace state 
+      * @param _state new market state
+    */
+    function changeMarketState(bool _state) public onlyOwner {
+        require(marktState != _state, "Sorry, this is the current state!!");
+        marktState = _state;
+        emit marketStateChanged(_state);
+    }
+
+    /** @dev returns the current state of marketplace */
+    function getMarketState() public view returns(bool){
+        return marktState;
     }
 
 
