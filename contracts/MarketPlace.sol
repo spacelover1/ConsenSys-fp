@@ -157,11 +157,6 @@ contract MarketPlace is Ownable {
         return admins[_address];
     }
 
-    /** @dev returns the number of active admins */
-    function getNumberOfAdmins() public view onlyAdmin() returns (uint256) {
-        return adminCount;
-    }
-
     /** @dev returns (true) if the address is store owner, otherwise returns (false) */
     function isStoreOwner(address _address) public view returns (bool) {
         return storeOwners[_address];
@@ -292,10 +287,14 @@ contract MarketPlace is Ownable {
         return true;
     }
 
+    /** @dev return total number of store fronts */  
+    function getStoreFrontCount() public view returns (uint) {
+        return storeCount;
+    }
+
     /** @dev Store owner can withdraw balance from their store fronts
      * @param _storeNum store front number
      */
-
     function withdraw(uint256 _storeNum)
         public
         payable
@@ -336,6 +335,12 @@ contract MarketPlace is Ownable {
         );
     }
 
+    /** @dev return store front by store owner address */ 
+    function getStoreFrontByStoreOwner() public view  returns(uint[] memory){
+        return storeOwnertoStoreFront[msg.sender];
+    }
+
+
     /** @dev return products info
      * @param _productNum product number
      */
@@ -361,6 +366,15 @@ contract MarketPlace is Ownable {
             StoreProducts[_productNum].isAvailable
         );
     }
+
+
+    /** @dev return products by store front
+      * @param _storeNum store front number
+    */ 
+    function getProductsByStoreFront(uint _storeNum) public view returns(uint[] memory){
+        return stotrFronttoProducts[_storeNum];
+    }
+    
 
     /**-----------------------------------------------------------------------
         -------------------------- Shopper Functions ------------------------

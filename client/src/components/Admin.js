@@ -7,7 +7,7 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numAdmin: '', storeNums: '', numStoreOwners: '', addStoreOwner: '', IsStoreOwner: '',
+      storeNums: '', numStoreOwners: '', addStoreOwner: '', IsStoreOwner: '',
       IsAdmin: '', accounts: this.props.accounts, contract: this.props.contract,
       MarketState: this.props.MarketState
     };
@@ -24,25 +24,22 @@ class Admin extends React.Component {
 
   start = async () => {
     const { accounts, contract } = this.state;
-    const marketState = await contract.getMarketState.call({ from: accounts[0] });
-    const admins = await contract.getNumberOfAdmins.call({ from: accounts[0] });
-    const storeOwners = await contract.getNumberOfStoreOwners.call({ from: accounts[0] });
     let storeNums = [];
-
-
+    let pendingList = [];
+    const marketState = await contract.getMarketState.call({ from: accounts[0] });
+    const storeOwners = await contract.getNumberOfStoreOwners.call({ from: accounts[0] });
     const storeFrontCount = await contract.getStoreFrontCount.call({ from: accounts[0] });
 
-    // for (let i = 0; i < storeFrontCount; i++) {
-    //   const storeFront = await contract.getStoreFrontInfo.call(i, { from: accounts[0] });
-    //   if (!storeFront[5] && storeFront[2] == "0x0000000000000000000000000000000000000000") {
-    //     pendingList.push("Store Number: " + i + " , Store Name: " + storeFront[0]);
-    //     storeNums.push(i);
-    //   }
-    // }
+    for (let i = 0; i < storeFrontCount; i++) {
+      const storeFront = await contract.getStoreFrontInfo.call(i, { from: accounts[0] });
+      if (!storeFront[5] && storeFront[2] == "0x0000000000000000000000000000000000000000") {
+        pendingList.push("Store Number: " + i + " , Store Name: " + storeFront[0]);
+        storeNums.push(i);
+      }
+    }
 
     this.setState({
-      numAdmin: admins, numStoreOwners: storeOwners,
-      MarketState: marketState, storeNums: storeNums
+      numStoreOwners: storeOwners, MarketState: marketState, storeNums: storeNums
     });
 
   };

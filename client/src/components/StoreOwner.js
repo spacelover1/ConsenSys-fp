@@ -31,7 +31,7 @@ class StoreOwner extends React.Component {
     // let activeStores = [];
     let balance = 0;
     try {
-      const storeFrontList = await contract.getStoreFrontByStoreOwner.call({ from: accounts[0] });
+      const storeFrontList = await contract.getStoreFrontByStoreOwner().call({ from: accounts[0] });
 
       for (let storenum of storeFrontList) {
         const storeFront = await contract.getStoreFrontInfo(storenum, { from: accounts[0] });

@@ -1,5 +1,5 @@
 export const MarketPlace= [
-    {
+  {
       "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -28,25 +28,12 @@ export const MarketPlace= [
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "newAdmin",
-          "type": "address"
+          "internalType": "bool",
+          "name": "state",
+          "type": "bool"
         }
       ],
-      "name": "adminAdded",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "admin",
-          "type": "address"
-        }
-      ],
-      "name": "adminRemoved",
+      "name": "marketStateChanged",
       "type": "event"
     },
     {
@@ -154,25 +141,6 @@ export const MarketPlace= [
         },
         {
           "indexed": false,
-          "internalType": "address",
-          "name": "admin",
-          "type": "address"
-        }
-      ],
-      "name": "storeFrontApproved",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "storeNum",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
           "internalType": "string",
           "name": "storeName",
           "type": "string"
@@ -198,19 +166,6 @@ export const MarketPlace= [
         }
       ],
       "name": "storeOwnerAdded",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "storeOwner",
-          "type": "address"
-        }
-      ],
-      "name": "storeOwnerRemoved",
       "type": "event"
     },
     {
@@ -306,6 +261,20 @@ export const MarketPlace= [
         }
       ],
       "name": "admins",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "marktState",
       "outputs": [
         {
           "internalType": "bool",
@@ -544,6 +513,33 @@ export const MarketPlace= [
     {
       "inputs": [
         {
+          "internalType": "bool",
+          "name": "_state",
+          "type": "bool"
+        }
+      ],
+      "name": "changeMarketState",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMarketState",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "_address",
           "type": "address"
@@ -575,6 +571,20 @@ export const MarketPlace= [
           "internalType": "bool",
           "name": "",
           "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getNumberOfStoreOwners",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -723,6 +733,20 @@ export const MarketPlace= [
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getStoreFrontCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -770,6 +794,20 @@ export const MarketPlace= [
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getStoreFrontByStoreOwner",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",
@@ -827,6 +865,26 @@ export const MarketPlace= [
           "internalType": "uint256",
           "name": "_storeNum",
           "type": "uint256"
+        }
+      ],
+      "name": "getProductsByStoreFront",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_storeNum",
+          "type": "uint256"
         },
         {
           "internalType": "uint256",
@@ -845,5 +903,7 @@ export const MarketPlace= [
       "stateMutability": "payable",
       "type": "function",
       "payable": true
-    },
-  ];
+    }
+
+
+];
