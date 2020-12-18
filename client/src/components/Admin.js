@@ -24,14 +24,16 @@ class Admin extends React.Component {
 
   start = async () => {
     const { accounts, contract } = this.state;
+    console.log("storageContract");
+    console.log(contract);
     let storeNums = [];
     let pendingList = [];
-    const marketState = await contract.getMarketState.call({ from: accounts[0] });
-    const storeOwners = await contract.getNumberOfStoreOwners.call({ from: accounts[0] });
-    const storeFrontCount = await contract.getStoreFrontCount.call({ from: accounts[0] });
+    const marketState = await contract.methods.getMarketState.call({ from: accounts[0] });
+    const storeOwners = await contract.methods.getNumberOfStoreOwners.call({ from: accounts[0] });
+    const storeFrontCount = await contract.methods.getStoreFrontCount.call({ from: accounts[0] });
 
     for (let i = 0; i < storeFrontCount; i++) {
-      const storeFront = await contract.getStoreFrontInfo.call(i, { from: accounts[0] });
+      const storeFront = await contract.methods.getStoreFrontInfo.call(i, { from: accounts[0] });
       if (!storeFront[5] && storeFront[2] == "0x0000000000000000000000000000000000000000") {
         pendingList.push("Store Number: " + i + " , Store Name: " + storeFront[0]);
         storeNums.push(i);
@@ -52,7 +54,7 @@ class Admin extends React.Component {
     if (!value) {
       alert("Please enter the address");
     } else {
-      contract.isAdmin(value, { from: accounts[0] }).then(result => {
+      contract.methods.isAdmin(value, { from: accounts[0] }).then(result => {
         if (result) {
           alert(value + " is an admin address");
         } else {
@@ -67,7 +69,7 @@ class Admin extends React.Component {
     event.preventDefault();
     const { accounts, contract, MarketState } = this.state;
     alert('Do you want to change market state?');
-    contract.changeMarketState(!MarketState, { from: accounts[0] }).then(result => {
+    contract.methods.changeMarketState(!MarketState, { from: accounts[0] }).then(result => {
       this.start();
       this.forceUpdate();
     });
@@ -80,9 +82,9 @@ class Admin extends React.Component {
     if (!value) {
       alert("Please enter the address");
     } else {
-      var check = contract.isStoreOwner(value, { from: accounts[0] }).then(result => {
+      var check = contract.methods.isStoreOwner(value, { from: accounts[0] }).then(result => {
         if (!result) {
-          contract.addStoreOwner(value, { from: accounts[0] }).then(result => {
+          contract.methods.addStoreOwner(value, { from: accounts[0] }).then(result => {
             this.forceUpdate();
           });
 
@@ -102,7 +104,7 @@ class Admin extends React.Component {
     if (!value) {
       alert("Please enter the address");
     } else {
-      contract.isStoreOwner(value, { from: accounts[0] }).then(result => {
+      contract.methods.isStoreOwner(value, { from: accounts[0] }).then(result => {
         if (result) {
           alert(value + " is an store owner address");
         } else {

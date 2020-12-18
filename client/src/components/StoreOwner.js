@@ -31,10 +31,10 @@ class StoreOwner extends React.Component {
     // let activeStores = [];
     let balance = 0;
     try {
-      const storeFrontList = await contract.getStoreFrontByStoreOwner().call({ from: accounts[0] });
+      const storeFrontList = await contract.methods.getStoreFrontByStoreOwner().call({ from: accounts[0] });
 
       for (let storenum of storeFrontList) {
-        const storeFront = await contract.getStoreFrontInfo(storenum, { from: accounts[0] });
+        const storeFront = await contract.methods.getStoreFrontInfo(storenum, { from: accounts[0] });
 
         if (storeFront[2] == "0x0000000000000000000000000000000000000000") {
 
@@ -62,7 +62,7 @@ class StoreOwner extends React.Component {
     if (!value) {
       alert("Please enter a store name");
     } else {
-      contract.createStoreFront(value, { from: accounts[0] }).then(result => {
+      contract.methods.createStoreFront(value, { from: accounts[0] }).then(result => {
         this.start();
         this.forceUpdate();
       });
@@ -71,9 +71,9 @@ class StoreOwner extends React.Component {
   }
   StoreProductsList = async (ManageStore) => {
     const { contract, accounts } = this.state;
-    const storeFront = await contract.getStoreFrontInfo(ManageStore, { from: accounts[0] });
+    const storeFront = await contract.methods.getStoreFrontInfo(ManageStore, { from: accounts[0] });
     var storeBalance = storeFront[4];
-    const data = await contract.getProductsByStoreFront(ManageStore, { from: accounts[0] });
+    const data = await contract.methods.getProductsByStoreFront(ManageStore, { from: accounts[0] });
     var productsData = [];
     var AvaProductsData = [];
     if (data.length == 0) {
@@ -82,7 +82,7 @@ class StoreOwner extends React.Component {
     } else {
       this.setState({ ProductsTable: true });
       for (var i = 0; i < data.length; i++) {
-        var pData = await contract.getProductInfo(data[i], { from: accounts[0] });
+        var pData = await contract.methods.getProductInfo(data[i], { from: accounts[0] });
         if (pData[5] && pData[4] > 0) {
           AvaProductsData.push("Store Num: " + pData[1] +
             "  ,  Name:  " + pData[0] +
@@ -132,7 +132,7 @@ class StoreOwner extends React.Component {
     if (!pName && !pPrice && pQuant) {
       alert("Please enter values");
     } else {
-      contract.addProduct(this.state.selectedStore, pName, pPrice, pQuant, { from: accounts[0] }).then(result => {
+      contract.methods.addProduct(this.state.selectedStore, pName, pPrice, pQuant, { from: accounts[0] }).then(result => {
         this.start();
         this.forceUpdate();
         alert("Please refresh page");
@@ -148,7 +148,7 @@ class StoreOwner extends React.Component {
     if (!NewPrice && !ProductNum) {
       alert("Please enter values");
     } else {
-      contract.updateProductPrice(this.state.selectedStore, ProductNum, NewPrice, { from: accounts[0] }).then(result => {
+      contract.methods.updateProductPrice(this.state.selectedStore, ProductNum, NewPrice, { from: accounts[0] }).then(result => {
         this.start();
         this.forceUpdate();
         alert("Please refresh page");
@@ -164,7 +164,7 @@ class StoreOwner extends React.Component {
     if (!ProductNum) {
       alert("Please enter values");
     } else {
-      contract.removeProduct(this.state.selectedStore, ProductNum, { from: accounts[0] }).then(result => {
+      contract.methods.removeProduct(this.state.selectedStore, ProductNum, { from: accounts[0] }).then(result => {
         this.start();
         this.forceUpdate();
         alert("Please refresh page");
@@ -178,7 +178,7 @@ class StoreOwner extends React.Component {
     const { accounts, contract } = this.state;
     var balance = this.state.storeBalance;
     if (balance > 0) {
-      contract.withdraw(this.state.selectedStore, { from: accounts[0] }).then(result => {
+      contract.methods.withdraw(this.state.selectedStore, { from: accounts[0] }).then(result => {
         this.start();
         this.forceUpdate();
         balance = 0;

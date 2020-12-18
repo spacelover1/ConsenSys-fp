@@ -25,11 +25,12 @@ class Shopper extends React.Component {
   start = async () => {
     const { accounts, contract, web3 } = this.state;
     // var plist=[];
-
-    const _StoreFrontIds = await contract.getStoreFrontCount.call({ from: accounts[0] });
+    // console.log("storageContract");
+    // console.log(contract);
+    const _StoreFrontIds = await contract.methods.getStoreFrontCount.call({ from: accounts[0] });
 
     for (let i = 1; i < _StoreFrontIds; i++) {
-      const storeFront = await contract.getStoreFrontInfo(i, { from: accounts[0] });
+      const storeFront = await contract.methods.getStoreFrontInfo(i, { from: accounts[0] });
       this.StoreProductsList(i);
     }
   };
@@ -41,7 +42,7 @@ class Shopper extends React.Component {
 
   StoreProductsList = async (storeNum) => {
     const { contract, accounts } = this.state;
-    const data = await contract.getProductsByStoreFront(storeNum, { from: accounts[0] });
+    const data = await contract.methods.getProductsByStoreFront(storeNum, { from: accounts[0] });
     var productsData = this.state.productsList;
     var AvaProductsData = this.state.AvaProductsList;
     var emptyStore = this.state.emptyStore;
@@ -49,7 +50,7 @@ class Shopper extends React.Component {
       emptyStore.push(`Store number: ${storeNum}`);
     } else {
       for (var i = 0; i < data.length; i++) {
-        var pData = await contract.getProductInfo(data[i], { from: accounts[0] });
+        var pData = await contract.methods.getProductInfo(data[i], { from: accounts[0] });
         if (pData[5] && pData[4] > 0) {
           AvaProductsData.push("Store Num: " + pData[1] +
             "  ,  Name:  " + pData[0] +
@@ -80,7 +81,7 @@ class Shopper extends React.Component {
     if (!storeNum, !productN, !productP) {
       alert("Please enter values");
     } else {
-      contract.purchaseProduct(storeNum, productN,
+      contract.methods.purchaseProduct(storeNum, productN,
         { from: accounts[0], value: productP }).then(result => {
           //this.start(); 
           this.forceUpdate();

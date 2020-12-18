@@ -5,7 +5,7 @@ class Header extends Component {
 	render() {
 		return (
 			<div class="App-header">
-				<h1>Online MarketPlace</h1>
+				<h1>Ethreum Silk Road</h1>
 				<ul>
 					<li>Address: {this.props.accounts} </li>
 					{(() => {
