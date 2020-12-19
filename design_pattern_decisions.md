@@ -14,7 +14,7 @@ The market state can be changed to inactive state by admin for the emergency.
 
 ## Self Destruction
 
-If there is a bug founded, the contract can be stopped permanently by market owner.
+If there is a bug founded, the contract can be stopped permanently by admin.
 
 ## EthPM
 
